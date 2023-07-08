@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css">
+    <title>Заказы</title>
+</head>
+<body>
+
+<h3>Детали заказа</h3>
+
+<p th:text="'ID заказа: ' + ${order.id}"></p>
+<p th:text="'Покупатель: ' + ${order.user.surname} + ' ' + ${order.user.name}"></p>
+<p th:text="'Адрес: ' + ${order.address}"></p>
+<p th:text="'Дата заказа: ' + ${order.orderDate}"></p>
+<p th:text="'Статус заказа: ' + ${order.status}"></p>
+<br>
+<h3>Товары</h3>
+<div th:each="cart : ${carts}">
+    <p th:text="'Товар: ' + ${cart.product.name}"></p>
+    <p th:text="'Стоимость: ' + ${cart.number} + 'x' + ${cart.product.price} + ' = ' + ${cart.price}"></p>
+    <hr>
+</div>
+<br>
+<p th:text="'Итоговая стоимость: ' + ${total}"></p>
+
+<th:block th:if="${user != null}">
+    <div th:if="${user.role.name() == 'ADMIN'}">
+        <form th:action="@{'/orders/' + ${order.id} + '/change'}" method="post">
+            <select required="required" name="orderStatus">
+                <option value="">Изменить статус заказа</option>
+                <option th:value="confirm">Подтвердить</option>
+                <option th:value="reject">Отказать</option>
+            </select>
+            <button type="submit">Изменить статус заказа</button>
+        </form>
+    </div>
+</th:block>
+
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css">
+    <title>Заказы</title>
+</head>
+<body>
+
+<h3>Заказы</h3>
+<div th:each="order : ${orders}">
+    <p th:text="'ID заказа: ' + ${order.id}"></p>
+    <p th:text="'Статус заказа: ' + ${order.status}"></p>
+    <a th:href="@{'/orders/' + ${order.id}}">Информация о заказе</a>
+    <hr>
+</div>
+
+</body>
+</html>

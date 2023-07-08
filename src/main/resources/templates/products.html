@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css">
+    <title>Продукты</title>
+</head>
+<body>
+
+<th:block th:if="${user != null}">
+    <div th:if="${user.role.name() == 'ADMIN'}">
+        <a th:href="@{'/products/create'}">Создать товар</a>
+        <a th:href="@{'/orders'}">Заказы</a>
+    </div>
+</th:block>
+
+<th:block th:if="${user != null}">
+    <div th:if="${user.role.name() == 'USER'}">
+        <a th:href="@{'/user'}">Личный кабинет</a>
+    </div>
+</th:block>
+
+<div th:each="product : ${products}">
+    <p th:text="'Категория: ' + ${product.category.name}"></p>
+    <p th:text="'Товар: ' + ${product.name}"></p>
+    <p th:text="'Стоимость: ' + ${product.price}"></p>
+    <a th:href="@{'/products/' + ${product.id}}">Info</a>
+    <th:block th:if="${user != null}">
+        <div th:if="${user.role.name() == 'ADMIN'}">
+            <a th:href="@{'/products/' + ${product.id} + '/edit'}">Редактировать</a>
+            <a th:href="@{'/products/' + ${product.id} + '/delete'}">Удалить</a>
+        </div>
+    </th:block>
+    <hr>
+</div>
+
+
+</body>
+</html>

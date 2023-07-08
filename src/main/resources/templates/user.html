@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+</head>
+<body>
+<h3>Личная информация</h3>
+<div>
+    <p th:text="'Имя: ' + ${user.name}"></p>
+    <p th:text="'Фамилия: ' + ${user.surname}"></p>
+    <p th:text="'Дата регистрации: ' + ${user.registrationDate}"></p>
+</div>
+
+<h3>История заказов</h3>
+<div th:each="order : ${orders}">
+    <p th:text="'Номер заказа: ' + ${order.id}"></p>
+    <p th:text="'Дата заказа: ' + ${order.orderDate}"></p>
+    <p th:text="'Статус заказа: ' + ${order.status}"></p>
+    <a th:href="@{'/orders/' + ${order.id}}">Информация о заказе</a>
+    <hr>
+</div>
+</body>
+</html>

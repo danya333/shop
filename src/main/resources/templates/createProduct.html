@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/style/style.css" th:href="@{/css/style.css}"/>
+    <title>Продукты</title>
+</head>
+<body>
+<div class="main">
+        <form action="/product/add" method="post">
+            <input type="text"
+                   placeholder="Название товара"
+                   name="productName"
+                   class="input-style"/>
+
+            <input type="text"
+                   placeholder="Стоимость товара"
+                   name="productPrice"
+                   class="input-style"/>
+
+            <select required="required" name="categoryId" class="input-style">
+                <option value="">Выберите категорию</option>
+                <option th:each="category : ${categories}" th:value="${category.id}">
+                    <span th:text="${category.name}"/>
+                </option>
+            </select>
+            <button type="submit">Создать товар</button>
+        </form>
+</div>
+
+</body>
+</html>

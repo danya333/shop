@@ -1,0 +1,19 @@
+.main {
+    display: flex;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.input-part{
+    width: 50%;
+}
+
+.input-style {
+    margin: 10px;
+}
+
+.products-list {
+    margin-left: 25px;
+    width: 50%;
+}
+

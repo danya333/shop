@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css">
+    <title>Продукт</title>
+</head>
+<body>
+
+<div>
+    <p th:text="'Категория: ' + ${product.category.name}"></p>
+    <p th:text="'Товар: ' + ${product.name}"></p>
+    <p th:text="'Стоимость: ' + ${product.price}"></p>
+    <p th:text="'Рейтинг: ' + ${mark}"></p>
+    <a th:href="@{'/products/' + ${product.id} + '/addToCart'}">Добавить в корзину</a>
+    <a th:href="@{'/cart'}">Перейти в корзину</a>
+
+    <h3>Отзывы:</h3>
+
+    <div th:if="${user.role.name() == 'ADMIN'}" th:each="review : ${reviews}">
+        <form th:action="@{'/products/' + ${product.id} + '/edit/review/'+ ${review.id} +'/confirm'}" method="post">
+            <p th:text="${review.text}"></p>
+            <select required="required" name="released">
+                <option th:value="true" th:selected="${review.released == true}">true</option>
+                <option th:value="false" th:selected="${review.released == false}">false</option>
+            </select>
+            <button type="submit">Подтвердить</button>
+        </form>
+    </div>
+    <div th:if="${user.role.name() == 'USER'}" th:each="checkedReview : ${checkedReviews}">
+        <p th:text="${checkedReview.text}"></p>
+    </div>
+
+    <form th:if="${user.role.name() == 'USER'} and ${reviewCheck == false}" th:action="@{'/products/' + ${product.Id} + '/edit/review/add' }" method="post">
+        <textarea placeholder="Отзыв" name="productReview"></textarea>
+        <input type="number" name="productMark">
+        <button type="submit">Оставить отзыв</button>
+    </form>
+
+</div>
+
+
+</body>
+</html>
