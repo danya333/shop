@@ -2,40 +2,79 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css">
-    <title>Продукт</title>
+    <link rel="stylesheet" type="text/css" href="../static/style/productInfo.css" th:href="@{/css/productInfo.css}"/>
+    <title>О товаре</title>
 </head>
 <body>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a th:href="@{'/'}">ALIEXPRESS</a>
+        </div>
+        <div class="header-links">
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'ADMIN'}">
+                    <a th:href="@{'/products/create'}">Создать товар</a>
+                    <a th:href="@{'/orders'}">Заказы</a>
+                </div>
+            </th:block>
 
-<div>
-    <p th:text="'Категория: ' + ${product.category.name}"></p>
-    <p th:text="'Товар: ' + ${product.name}"></p>
-    <p th:text="'Стоимость: ' + ${product.price}"></p>
-    <p th:text="'Рейтинг: ' + ${mark}"></p>
-    <a th:href="@{'/products/' + ${product.id} + '/addToCart'}">Добавить в корзину</a>
-    <a th:href="@{'/cart'}">Перейти в корзину</a>
-
-    <h3>Отзывы:</h3>
-
-    <div th:if="${user.role.name() == 'ADMIN'}" th:each="review : ${reviews}">
-        <form th:action="@{'/products/' + ${product.id} + '/edit/review/'+ ${review.id} +'/confirm'}" method="post">
-            <p th:text="${review.text}"></p>
-            <select required="required" name="released">
-                <option th:value="true" th:selected="${review.released == true}">true</option>
-                <option th:value="false" th:selected="${review.released == false}">false</option>
-            </select>
-            <button type="submit">Подтвердить</button>
-        </form>
-    </div>
-    <div th:if="${user.role.name() == 'USER'}" th:each="checkedReview : ${checkedReviews}">
-        <p th:text="${checkedReview.text}"></p>
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'USER'}">
+                    <a th:href="@{'/user'}">Личный кабинет</a>
+                    <a th:href="@{'/cart'}">Корзина</a>
+                </div>
+            </th:block>
+        </div>
     </div>
 
-    <form th:if="${user.role.name() == 'USER'} and ${reviewCheck == false}" th:action="@{'/products/' + ${product.Id} + '/edit/review/add' }" method="post">
-        <textarea placeholder="Отзыв" name="productReview"></textarea>
-        <input type="number" name="productMark">
-        <button type="submit">Оставить отзыв</button>
-    </form>
+    <div class="data">
+        <div class="product">
+            <p th:text="${product.name}" class="product-name">></p>
+            <p th:text="'Категория: ' + ${product.category.name}"></p>
+            <p th:text="'Стоимость: ' + ${product.price}"></p>
+            <p th:text="'Рейтинг: ' + ${mark}"></p>
+
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'USER'}" class="addToCart">
+                    <a th:href="@{'/products/' + ${product.id} + '/addToCart'}">Добавить в корзину</a>
+                </div>
+            </th:block>
+
+        </div>
+
+        <div class="reviews">
+
+            <form th:if="${user.role.name() == 'USER'} and ${reviewCheck == false}"
+                  th:action="@{'/products/' + ${product.Id} + '/edit/review/add' }" method="post">
+                <textarea placeholder="Отзыв" name="productReview"></textarea>
+                <input type="number" name="productMark" placeholder="Рейтинг">
+                <button type="submit" class="reviewsSubmit">Оставить отзыв</button>
+            </form>
+
+            <div th:if="${user.role.name() == 'USER'} and ${reviewCheck == true}">
+                <p>Отзыв уже оставлен!</p>
+            </div>
+
+            <th:block th:if="${user.role.name() == 'ADMIN'}" th:each="review : ${reviews}">
+                <form th:action="@{'/products/' + ${product.id} + '/edit/review/'+ ${review.id} +'/confirm'}"
+                      method="post">
+                    <p th:text="${review.text}" class="reviews-text"></p>
+                    <select required="required" name="released">
+                        <option th:value="true" th:selected="${review.released == true}">true</option>
+                        <option th:value="false" th:selected="${review.released == false}">false</option>
+                    </select>
+                    <button type="submit">Подтвердить</button>
+                </form>
+            </th:block>
+
+            <th:block th:if="${user.role.name() == 'USER'}" th:each="checkedReview : ${checkedReviews}">
+                <p th:text="${checkedReview.text}" class="reviews-text"></p>
+            </th:block>
+
+        </div>
+    </div>
+
 
 </div>
 

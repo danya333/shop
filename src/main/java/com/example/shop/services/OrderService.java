@@ -15,6 +15,10 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserService userService;
 
+    public User getUser(){
+        return userService.getCurrentUser();
+    }
+
     // Получить список всех заказов
     public List<Order> findAllOrders(){
         return orderRepository.findAll();

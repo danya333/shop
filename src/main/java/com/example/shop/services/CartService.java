@@ -18,6 +18,10 @@ public class CartService {
     private final OrderRepository orderRepository;
     private final UserService userService;
 
+    public User getUser(){
+        return userService.getCurrentUser();
+    }
+
     // Получить список Cart по Order
     public List<Cart> findCartsByOrder(Order order) {
         return cartRepository.getCartsByOrder(order);

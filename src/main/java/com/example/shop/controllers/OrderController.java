@@ -37,6 +37,7 @@ public class OrderController {
         model.addAttribute("carts", carts);
         model.addAttribute("total", total);
         model.addAttribute("order", order);
+        model.addAttribute("user", orderService.getUser());
         return "orderInfo";
     }
 

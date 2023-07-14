@@ -2,23 +2,51 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/style/user.css" th:href="@{/css/user.css}"/>
     <title>Личный кабинет</title>
 </head>
 <body>
-<h3>Личная информация</h3>
-<div>
-    <p th:text="'Имя: ' + ${user.name}"></p>
-    <p th:text="'Фамилия: ' + ${user.surname}"></p>
-    <p th:text="'Дата регистрации: ' + ${user.registrationDate}"></p>
+
+
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a th:href="@{'/'}">ALIEXPRESS</a>
+        </div>
+        <div class="header-links">
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'USER'}">
+                    <a th:href="@{'/user'}">Личный кабинет</a>
+                    <a th:href="@{'/cart'}">Корзина</a>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+
+    <div class="data">
+        <div class="userInfo">
+            <h3>Личная информация</h3>
+            <div>
+                <p th:text="'Имя: ' + ${user.name}"></p>
+                <p th:text="'Фамилия: ' + ${user.surname}"></p>
+                <p th:text="'Дата регистрации: ' + ${user.registrationDate}"></p>
+            </div>
+        </div>
+
+        <div class="orders">
+            <h3>История заказов</h3>
+            <div th:each="order : ${orders}" class="order">
+                <hr>
+                <p th:text="'Номер заказа: ' + ${order.id}"></p>
+                <p th:text="'Дата заказа: ' + ${order.orderDate}"></p>
+                <p th:text="'Статус заказа: ' + ${order.status}"></p>
+                <a th:href="@{'/orders/' + ${order.id}}">Информация о заказе</a>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<h3>История заказов</h3>
-<div th:each="order : ${orders}">
-    <p th:text="'Номер заказа: ' + ${order.id}"></p>
-    <p th:text="'Дата заказа: ' + ${order.orderDate}"></p>
-    <p th:text="'Статус заказа: ' + ${order.status}"></p>
-    <a th:href="@{'/orders/' + ${order.id}}">Информация о заказе</a>
-    <hr>
-</div>
 </body>
 </html>

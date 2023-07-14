@@ -2,38 +2,52 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../static/style/products.css" th:href="@{/css/products.css}"/>
     <title>Продукты</title>
 </head>
 <body>
 
-<th:block th:if="${user != null}">
-    <div th:if="${user.role.name() == 'ADMIN'}">
-        <a th:href="@{'/products/create'}">Создать товар</a>
-        <a th:href="@{'/orders'}">Заказы</a>
-    </div>
-</th:block>
+<div class="container">
 
-<th:block th:if="${user != null}">
-    <div th:if="${user.role.name() == 'USER'}">
-        <a th:href="@{'/user'}">Личный кабинет</a>
-    </div>
-</th:block>
-
-<div th:each="product : ${products}">
-    <p th:text="'Категория: ' + ${product.category.name}"></p>
-    <p th:text="'Товар: ' + ${product.name}"></p>
-    <p th:text="'Стоимость: ' + ${product.price}"></p>
-    <a th:href="@{'/products/' + ${product.id}}">Info</a>
-    <th:block th:if="${user != null}">
-        <div th:if="${user.role.name() == 'ADMIN'}">
-            <a th:href="@{'/products/' + ${product.id} + '/edit'}">Редактировать</a>
-            <a th:href="@{'/products/' + ${product.id} + '/delete'}">Удалить</a>
+    <div class="header">
+        <div class="logo">
+            <a th:href="@{'/'}">ALIEXPRESS</a>
         </div>
-    </th:block>
-    <hr>
-</div>
+        <div class="header-links">
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'ADMIN'}">
+                    <a th:href="@{'/products/create'}">Создать товар</a>
+                    <a th:href="@{'/orders'}">Заказы</a>
+                </div>
+            </th:block>
 
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'USER'}">
+                    <a th:href="@{'/user'}">Личный кабинет</a>
+                    <a th:href="@{'/cart'}">Корзина</a>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+
+    <div class="data">
+        <div th:each="product : ${products}" class="product">
+            <a th:href="@{'/products/' + ${product.id}}" class="a-info">
+                <p th:text="${product.name}" class="product-name"></p>
+                <p th:text="'Категория: ' + ${product.category.name}"></p>
+                <p th:text="'Стоимость: ' + ${product.price}"></p>
+            </a>
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'ADMIN'}" class="remDel">
+                    <a th:href="@{'/products/' + ${product.id} + '/edit'}">Редактировать</a>
+                    <a th:href="@{'/products/' + ${product.id} + '/delete'}">Удалить</a>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>

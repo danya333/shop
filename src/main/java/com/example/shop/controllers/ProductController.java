@@ -23,6 +23,12 @@ public class ProductController {
     private final ReviewService reviewService;
     private final UserService userService;
 
+
+    @GetMapping(path = "/")
+    public String main() {
+        return "redirect:/products";
+    }
+
     // Страница с товарами
     @GetMapping(path = "/products")
     public String products(Model model) {

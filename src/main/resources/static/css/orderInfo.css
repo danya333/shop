@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: rgba(240, 240, 240, 255);
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 10px gray;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    margin-left: 25px;
+}
+
+.logo a {
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+.header-links {
+    margin-right: 25px;
+}
+
+.header-links a {
+    padding-right: 10px;
+}
+
+
+/*////////////////////////////////////////////////////////////////*/
+
+.data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.data p {
+    padding-top: 10px;
+}
+
+.order {
+    width: 16%;
+    margin: 10px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px gray;
+}
+
+.order-name {
+    font-weight: bold;
+}
+
+.order select {
+    width: 50%;
+    height: 30px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 10px gray;
+}
+
+.order button {
+    background-color: rgba(240, 240, 240, 255);
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 10px;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+.order button:hover {
+    transition-duration: 0.4s;
+    background-color: #4CAF50;
+    color: white;
+
+}
+
+.products {
+    width: 16%;
+    margin: 10px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px gray;
+}
+
+.totalPrice {
+    margin-top: 10px;
+    font-weight: bold;
+}
