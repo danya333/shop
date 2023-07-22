@@ -1,8 +1,6 @@
 package com.example.shop.services;
 
 import com.example.shop.Repositories.SpecificationRepository;
-import com.example.shop.models.Category;
-import com.example.shop.models.Product;
 import com.example.shop.models.Specification;
 import com.example.shop.models.User;
 import lombok.AllArgsConstructor;
@@ -15,7 +13,7 @@ import java.util.List;
 public class SpecificationService {
     private final CategoryService categoryService;
     private final UserService userService;
-    private final ProductService productService;
+    private final SpecificationRepository specificationRepository;
 
      // Получить все specifications по категории
     public List<Specification> findSpecificationsByCategoryId(Long categoryId){
@@ -27,8 +25,10 @@ public class SpecificationService {
         return userService.getCurrentUser();
     }
 
-    // Получить product по ID
-    public Product findProductById(Long productId){
-        return productService.findProductById(productId);
+
+    // Найти спецификацию по ID
+    public Specification findSpecificationById(Long id){
+        return specificationRepository.findById(id).orElse(null);
     }
+
 }

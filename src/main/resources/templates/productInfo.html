@@ -78,7 +78,7 @@
                     <button type="submit" class="reviewsSubmit">Оставить отзыв</button>
                 </form>
 
-                <div th:if="${user.role.name() == 'USER'} and ${reviewCheck == true}">
+                <div th:if="${user.role.name() == 'USER'} and ${reviewCheck == true}" class="reviewAdded">
                     <h3>Отзыв уже оставлен!</h3>
                 </div>
             </th:block>
@@ -103,8 +103,17 @@
                 </th:block>
             </th:block>
 
-            <th:block th:if="${user.role.name() != 'ADMIN'}" th:each="checkedReview : ${checkedReviews}">
-                <p th:text="${checkedReview.text}" class="reviews-text"></p>
+            <th:block th:if="${user != null}">
+                <th:block th:if="${user.role.name() != 'ADMIN'}" th:each="checkedReview : ${checkedReviews}">
+                    <p th:text="${checkedReview.text}" class="reviews-text"></p>
+                </th:block>
+            </th:block>
+
+            <th:block th:if="${user == null}">
+                <th:block th:each="checkedReview : ${checkedReviews}">
+                    <p th:text="${checkedReview.text}" class="reviews-text"></p>
+                    <a href="/login" class="reviews-in">Войти, чтобы оставить отзыв</a>
+                </th:block>
             </th:block>
 
         </div>

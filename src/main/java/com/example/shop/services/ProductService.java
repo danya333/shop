@@ -4,6 +4,7 @@ import com.example.shop.Repositories.CategoryRepository;
 import com.example.shop.Repositories.DescriptionRepository;
 import com.example.shop.Repositories.ProductRepository;
 import com.example.shop.models.Category;
+import com.example.shop.models.Description;
 import com.example.shop.models.Product;
 import com.example.shop.models.ProductDetail;
 import lombok.AllArgsConstructor;
@@ -62,7 +63,11 @@ public class ProductService {
         for (int i = 0; i < product.getCategory().getSpecifications().size(); i++) {
             ProductDetail detail = new ProductDetail();
             detail.setSpecification(product.getCategory().getSpecifications().get(i));
-            detail.setDescription(product.getDescriptions().get(i));
+            if(product.getDescriptions().size() == 0 || product.getDescriptions().size() - 1 < i){
+                detail.setDescription(new Description());
+            } else {
+                detail.setDescription(product.getDescriptions().get(i));
+            }
             productDetails.add(detail);
         }
         return productDetails;

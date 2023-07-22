@@ -13,8 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final DescriptionService descriptionService;
-    private final ProductService productService;
+//    private final SpecificationService specificationService;
 
     // Найти все категории товаров
     public List<Category> findAllCategories() {
@@ -26,18 +25,19 @@ public class CategoryService {
         return categoryRepository.findById(id).orElse(null);
     }
 
-    // Добавить характеристики товару
-    public void productDetailsForm(Long categoryId, Long productId, List<String> values){
-        List<Specification> specifications = findCategoryById(categoryId).getSpecifications();
-        int i = 0;
-        for (String value : values){
-            Description description = new Description();
-            description.setProduct(productService.findProductById(productId));
-            description.setSpecification(specifications.get(i));
-            description.setName(value);
-            descriptionService.saveDescription(description);
-            i++;
-        }
-    }
+//    // Добавить характеристики товару
+//    public void productDetailsForm(Long categoryId, Long productId, List<String> values){
+//        List<Specification> specifications = findCategoryById(categoryId).getSpecifications();
+//        int i = 0;
+//        for (String value : values){
+//            Description description = new Description();
+//            description.setProduct(productService.findProductById(productId));
+//            description.setSpecification(specifications.get(i));
+//            description.setName(value);
+//            descriptionService.saveDescription(description);
+//            i++;
+//        }
+//    }
+
 
 }

@@ -25,22 +25,29 @@
     <div class="data">
         <form th:action="@{'/products/' + ${product.Id} + '/edit' }" method="post" class="createForm">
             <p>Редактирование</p>
-            <input type="text"
-                   placeholder="Название товара"
-                   name="productName"
-                   th:value="${product.name}"/>
-
-            <input type="text"
-                   placeholder="Стоимость товара"
-                   name="productPrice"
-                   th:value="${product.price}"/>
-
-
-            <div th:each="detail : ${productDetails}" class="inputs">
-                <input type="text" th:name="value" th:placeholder="${detail.specification.name}"
-                th:value="${detail.description.name}"/>
+            <div class="first-inputs">
+                <div>
+                    <p>Название: </p>
+                    <input type="text"
+                           placeholder="Название товара"
+                           name="productName"
+                           th:value="${product.name}"/>
+                </div>
+                <div>
+                    <p>Стоимость: </p>
+                    <input type="text"
+                           placeholder="Стоимость товара"
+                           name="productPrice"
+                           th:value="${product.price}"/>
+                </div>
             </div>
 
+            <div th:each="detail : ${productDetails}" class="inputs">
+                <input type="hidden" th:name="option" th:value="${detail.specification.id}"/>
+                <p th:text="${detail.specification.name} + ': '"></p>
+                <input type="text" th:name="value" th:placeholder="${detail.specification.name}"
+                       th:value="${detail.description.name}"/>
+            </div>
 
             <button type="submit">Сохранить</button>
         </form>

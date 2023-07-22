@@ -1,7 +1,10 @@
 package com.example.shop.controllers;
 
+import com.example.shop.models.Product;
 import com.example.shop.models.Specification;
 import com.example.shop.services.CategoryService;
+import com.example.shop.services.DescriptionService;
+import com.example.shop.services.ProductService;
 import com.example.shop.services.SpecificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,7 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryController {
     private final SpecificationService specificationService;
-    private final CategoryService categoryService;
+    private final DescriptionService descriptionService;
+    private final ProductService productService;
 
     // Страница добавления характеристик товару /productDetails
     @GetMapping(path = "/productDetails/{categoryId}/{productId}")
@@ -25,22 +29,21 @@ public class CategoryController {
                                  @PathVariable(name = "productId") Long productId,
                                  Model model
     ){
-        List<Specification> specifications = specificationService.findSpecificationsByCategoryId(categoryId);
-        System.out.println("--------- " + specifications.size());
-        model.addAttribute("specifications", specifications);
+        Product product = productService.findProductById(productId);
+        model.addAttribute("specifications", specificationService.findSpecificationsByCategoryId(categoryId));
         model.addAttribute("user", specificationService.getCurrentUser());
-        model.addAttribute("product", specificationService.findProductById(productId));
+        model.addAttribute("product", product);
         model.addAttribute("categoryId", categoryId);
         return "productDetails";
     }
 
     // Форма добавления характеристик товару /productDetails
     @PostMapping(path = "/productDetails/{categoryId}/{productId}")
-    public String productDetailsForm(@PathVariable(name = "categoryId") Long categoryId,
-                                 @PathVariable(name = "productId") Long productId,
+    public String productDetailsForm(@PathVariable(name = "productId") Long productId,
+                                 @PathVariable(name = "categoryId") Long categoryId,
                                  @RequestParam(name = "value") List<String> values
     ){
-        categoryService.productDetailsForm(categoryId, productId, values);
+        descriptionService.addDetails(productId, categoryId, values);
         return "redirect:/products";
     }
 }

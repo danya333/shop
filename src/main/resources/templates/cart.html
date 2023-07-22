@@ -40,7 +40,7 @@
 
         <div class="cart-process">
             <p th:text="'Итоговая стоимость: ' + ${total}"></p>
-            <form action="/cart/process" method="post">
+            <form action="/cart/process" method="post" class="address">
                 <input type="text"
                        placeholder="Адрес доставки"
                        name="address"/>

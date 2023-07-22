@@ -20,6 +20,7 @@ public class ProductController {
     private final ReviewService reviewService;
     private final UserService userService;
     private final DescriptionService descriptionService;
+    private final SpecificationService specificationService;
 
 
     @GetMapping(path = "/")
@@ -61,6 +62,9 @@ public class ProductController {
         model.addAttribute("product", product);
         model.addAttribute("user", userService.getCurrentUser());
         model.addAttribute("productDetails", productService.getProductDetails(product));
+        model.addAttribute("descriptions", product.getDescriptions());
+        model.addAttribute("specifications", specificationService
+                .findSpecificationsByCategoryId(product.getCategory().getId()));
         return "editProduct";
     }
 
@@ -70,10 +74,11 @@ public class ProductController {
             @PathVariable(name = "id") Long productId,
             @RequestParam(name = "productName") String productName,
             @RequestParam(name = "productPrice") int productPrice,
-            @RequestParam(name = "value") List<String> values
+            @RequestParam(name = "value") List<String> values,
+            @RequestParam(name = "option") List<Long> options
     ) {
         productService.editProduct(productId, productName, productPrice);
-        descriptionService.editDescriptions(productService.findProductById(productId), values);
+        descriptionService.editDescriptions(values, options, productId);
         return "redirect:/products";
     }
 

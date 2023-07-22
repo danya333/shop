@@ -132,7 +132,7 @@ body {
 .changePlus {
     background-color: rgba(240, 240, 240, 255);
     border-radius: 5px;
-    padding: 6px 10px;
+    padding: 5px 10px;
     color: black;
     border: 2px solid #4CAF50;
     text-decoration: none;
@@ -147,7 +147,7 @@ body {
 .changeMinus {
     background-color: rgba(240, 240, 240, 255);
     border-radius: 5px;
-    padding: 6px 12px;
+    padding: 5px 12px;
     color: black;
     border: 2px solid #4CAF50;
     text-decoration: none;
@@ -162,7 +162,7 @@ body {
 .delete {
     background-color: rgba(240, 240, 240, 255);
     border-radius: 5px;
-    padding: 6px;
+    padding: 5px;
     color: black;
     border: 2px solid #4CAF50;
     text-decoration: none;
@@ -172,4 +172,11 @@ body {
     transition-duration: 0.4s;
     background-color: #4CAF50;
     color: white;
+}
+
+.address {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
 }
