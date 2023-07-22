@@ -18,6 +18,7 @@
                 <div th:if="${user.role.name() == 'ADMIN'}">
                     <a th:href="@{'/products/create'}">Создать товар</a>
                     <a th:href="@{'/orders'}">Заказы</a>
+                    <a th:href="@{'/logout'}">Выйти</a>
                 </div>
             </th:block>
 
@@ -25,6 +26,14 @@
                 <div th:if="${user.role.name() == 'USER'}">
                     <a th:href="@{'/user'}">Личный кабинет</a>
                     <a th:href="@{'/cart'}">Корзина</a>
+                    <a th:href="@{'/logout'}">Выйти</a>
+                </div>
+            </th:block>
+
+            <th:block th:if="${user == null}">
+                <div>
+                    <a th:href="@{'/registration'}">Регистрация</a>
+                    <a th:href="@{'/login'}">Войти</a>
                 </div>
             </th:block>
         </div>
@@ -38,6 +47,11 @@
                 <p th:text="'Категория: ' + ${product.category.name}"></p>
                 <p th:text="'Стоимость: ' + ${product.price}"></p>
             </a>
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'USER'}" class="remDel">
+                    <a th:href="@{'/products/' + ${product.id} + '/addToCart/'}">Добавить в корзину</a>
+                </div>
+            </th:block>
             <th:block th:if="${user != null}">
                 <div th:if="${user.role.name() == 'ADMIN'}" class="remDel">
                     <a th:href="@{'/products/' + ${product.id} + '/edit'}">Редактировать</a>

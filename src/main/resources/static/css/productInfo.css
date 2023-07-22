@@ -115,7 +115,7 @@ body {
     background-color: rgba(240, 240, 240, 255);
     border-radius: 5px;
     margin-top: 10px;
-    padding: 10px;
+    padding: 6px;
     color: black;
     border: 2px solid #4CAF50;
 }
@@ -136,3 +136,6 @@ body {
     box-shadow: 0 0 10px gray;
 }
 
+.noReviews {
+    margin-bottom: 20px;
+}

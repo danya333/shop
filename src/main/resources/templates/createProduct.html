@@ -2,23 +2,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../static/style/style.css" th:href="@{/css/products.css}"/>
-    <title>Продукты</title>
+    <link rel="stylesheet" type="text/css" href="../static/style/createProduct.css" th:href="@{/css/createProduct.css}"/>
+    <title>Создание товара</title>
 </head>
 <body>
-<div class="main">
-        <form action="/product/add" method="post">
+<div class="container">
+
+    <div class="header">
+        <div class="logo">
+            <a th:href="@{'/'}">ALIEXPRESS</a>
+        </div>
+        <div class="header-links">
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'ADMIN'}">
+                    <a th:href="@{'/products/create'}">Создать товар</a>
+                    <a th:href="@{'/orders'}">Заказы</a>
+                    <a th:href="@{'/logout'}">Выйти</a>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+    <div class="data">
+        <form action="/products/create" method="post" class="createForm">
+            <p>Создание товара</p>
             <input type="text"
                    placeholder="Название товара"
-                   name="productName"
-                   class="input-style"/>
+                   name="productName"/>
 
             <input type="text"
                    placeholder="Стоимость товара"
-                   name="productPrice"
-                   class="input-style"/>
+                   name="productPrice"/>
 
-            <select required="required" name="categoryId" class="input-style">
+            <select required="required" name="categoryId">
                 <option value="">Выберите категорию</option>
                 <option th:each="category : ${categories}" th:value="${category.id}">
                     <span th:text="${category.name}"/>
@@ -26,6 +42,8 @@
             </select>
             <button type="submit">Создать товар</button>
         </form>
+    </div>
+
 </div>
 
 </body>

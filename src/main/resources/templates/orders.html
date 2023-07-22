@@ -2,18 +2,40 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../static/style/orders.css" th:href="@{/css/orders.css}"/>
     <title>Заказы</title>
 </head>
 <body>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a th:href="@{'/'}">ALIEXPRESS</a>
+        </div>
+        <div class="header-links">
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'ADMIN'}">
+                    <a th:href="@{'/products/create'}">Создать товар</a>
+                    <a th:href="@{'/orders'}">Заказы</a>
+                    <a th:href="@{'/logout'}">Выйти</a>
+                </div>
+            </th:block>
+        </div>
+    </div>
 
-<h3>Заказы</h3>
-<div th:each="order : ${orders}">
-    <p th:text="'ID заказа: ' + ${order.id}"></p>
-    <p th:text="'Статус заказа: ' + ${order.status}"></p>
-    <a th:href="@{'/orders/' + ${order.id}}">Информация о заказе</a>
-    <hr>
+    <div class="data">
+        <div class="orders">
+            <p class="orders-header">Заказы</p>
+            <div th:each="order : ${orders}" class="order">
+                <hr>
+                <p th:text="'ID заказа: ' + ${order.id}"></p>
+                <p th:text="'Статус заказа: ' + ${order.status}"></p>
+                <a th:href="@{'/orders/' + ${order.id}}" class="link-info">Информация о заказе</a>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 
 </body>
 </html>

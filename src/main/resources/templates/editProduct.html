@@ -2,25 +2,49 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../static/style/style.css" th:href="@{/css/products.css}"/>
-    <title>Продукты</title>
+    <link rel="stylesheet" type="text/css" href="../static/style/editProduct.css" th:href="@{/css/editProduct.css}"/>
+    <title>Редактирование</title>
 </head>
 <body>
-<div class="main">
-        <form th:action="@{'/products/' + ${product.Id} + '/edit' }" method="post">
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a th:href="@{'/'}">ALIEXPRESS</a>
+        </div>
+        <div class="header-links">
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'ADMIN'}">
+                    <a th:href="@{'/products/create'}">Создать товар</a>
+                    <a th:href="@{'/orders'}">Заказы</a>
+                    <a th:href="@{'/logout'}">Выйти</a>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+    <div class="data">
+        <form th:action="@{'/products/' + ${product.Id} + '/edit' }" method="post" class="createForm">
+            <p>Редактирование</p>
             <input type="text"
                    placeholder="Название товара"
                    name="productName"
-                   th:value="${product.name}"
-                   class="input-style"/>
+                   th:value="${product.name}"/>
 
             <input type="text"
                    placeholder="Стоимость товара"
                    name="productPrice"
-                   th:value="${product.price}"
-                   class="input-style"/>
+                   th:value="${product.price}"/>
+
+
+            <div th:each="detail : ${productDetails}" class="inputs">
+                <input type="text" th:name="value" th:placeholder="${detail.specification.name}"
+                th:value="${detail.description.name}"/>
+            </div>
+
+
             <button type="submit">Сохранить</button>
         </form>
+    </div>
 </div>
 
 </body>

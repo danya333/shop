@@ -28,12 +28,20 @@ public class CartController {
         return "cart";
     }
 
-    // Добавление товара в корзину
+    // Добавление товара в корзину из products
+    @GetMapping(path = "/products/{productId}/addToCart/")
+    public String addToCartFromProducts(@PathVariable(name = "productId") Long productId) {
+        cartService.addToCart(productId);
+        return "redirect:/products";
+    }
+
+    // Добавление товара в корзину из productsInfo
     @GetMapping(path = "/products/{productId}/addToCart")
-    public String addToCart(@PathVariable(name = "productId") Long productId) {
+    public String addToCartFromProductInfo(@PathVariable(name = "productId") Long productId) {
         cartService.addToCart(productId);
         return "redirect:/products/" + productId;
     }
+
 
     // Увеличение в корзине товара на единицу
     @GetMapping(path = "/cart/{productId}/add")

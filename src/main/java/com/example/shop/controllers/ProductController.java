@@ -3,10 +3,7 @@ package com.example.shop.controllers;
 import com.example.shop.models.Product;
 import com.example.shop.models.Review;
 import com.example.shop.models.User;
-import com.example.shop.services.CategoryService;
-import com.example.shop.services.ProductService;
-import com.example.shop.services.ReviewService;
-import com.example.shop.services.UserService;
+import com.example.shop.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +19,7 @@ public class ProductController {
     private final CategoryService categoryService;
     private final ReviewService reviewService;
     private final UserService userService;
+    private final DescriptionService descriptionService;
 
 
     @GetMapping(path = "/")
@@ -41,24 +39,28 @@ public class ProductController {
     @GetMapping(path = "/products/create")
     public String createProduct(Model model) {
         model.addAttribute("categories", categoryService.findAllCategories());
+        model.addAttribute("user", userService.getCurrentUser());
         return "createProduct";
     }
 
     // Форма создания товара
-    @PostMapping(path = "/product/add")
+    @PostMapping(path = "/products/create")
     public String addProduct(
             @RequestParam(name = "productName") String productName,
             @RequestParam(name = "productPrice") int productPrice,
             @RequestParam(name = "categoryId") Long categoryId
     ) {
-        productService.createProduct(productName, productPrice, categoryId);
-        return "redirect:/products";
+        Long productId = productService.createProduct(productName, productPrice, categoryId);
+        return "redirect:/productDetails/" + categoryId + "/" + productId;
     }
 
     // Страница редактирования товара
     @GetMapping(path = "/products/{id}/edit")
     public String editProducts(@PathVariable(name = "id") Long productId, Model model) {
-        model.addAttribute("product", productService.findProductById(productId));
+        Product product = productService.findProductById(productId);
+        model.addAttribute("product", product);
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("productDetails", productService.getProductDetails(product));
         return "editProduct";
     }
 
@@ -67,9 +69,11 @@ public class ProductController {
     public String editProduct(
             @PathVariable(name = "id") Long productId,
             @RequestParam(name = "productName") String productName,
-            @RequestParam(name = "productPrice") int productPrice
+            @RequestParam(name = "productPrice") int productPrice,
+            @RequestParam(name = "value") List<String> values
     ) {
         productService.editProduct(productId, productName, productPrice);
+        descriptionService.editDescriptions(productService.findProductById(productId), values);
         return "redirect:/products";
     }
 
@@ -88,6 +92,7 @@ public class ProductController {
         model.addAttribute("reviews", reviews);
         model.addAttribute("mark", mark);
         model.addAttribute("reviewCheck", reviewService.reviewCheck(product, user));
+        model.addAttribute("productDetails", productService.getProductDetails(product));
         return "productInfo";
     }
 
@@ -97,4 +102,5 @@ public class ProductController {
         productService.deleteProduct(productId);
         return "redirect:/products";
     }
+
 }

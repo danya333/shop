@@ -1,18 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/style/registration.css" th:href="@{/css/registration.css}"/>
     <title>Регистрация</title>
 </head>
 <body>
 
-<form action="/user/create" method="post">
-    <input type="text" placeholder="Имя" name="userName">
-    <input type="text" placeholder="Фамилия" name="userSurname">
-    <input type="text" placeholder="Логин" name="login">
-    <input type="password" placeholder="Пароль" name="password">
-    <button type="submit">Зарегистрироваться</button>
-</form>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a th:href="@{'/'}">ALIEXPRESS</a>
+        </div>
+        <div class="header-links">
+            <th:block th:if="${user == null}">
+                <div>
+                    <a th:href="@{'/login'}">Войти</a>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+
+    <div class="data">
+        <form action="/user/create" method="post" class="createForm">
+            <p>Регистрация</p>
+            <input type="text" placeholder="Имя" name="userName">
+            <input type="text" placeholder="Фамилия" name="userSurname">
+            <input type="text" placeholder="Логин" name="login">
+            <input type="password" placeholder="Пароль" name="password">
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+    </div>
+
+</div>
+
 
 </body>
 </html>

@@ -113,7 +113,7 @@ body {
     background-color: rgba(240, 240, 240, 255);
     border-radius: 5px;
     margin-top: 10px;
-    padding: 10px;
+    padding: 6px;
     color: black;
     border: 2px solid #4CAF50;
 }
@@ -132,7 +132,7 @@ body {
 .changePlus {
     background-color: rgba(240, 240, 240, 255);
     border-radius: 5px;
-    padding: 7px;
+    padding: 6px 10px;
     color: black;
     border: 2px solid #4CAF50;
     text-decoration: none;
@@ -147,7 +147,7 @@ body {
 .changeMinus {
     background-color: rgba(240, 240, 240, 255);
     border-radius: 5px;
-    padding: 7px;
+    padding: 6px 12px;
     color: black;
     border: 2px solid #4CAF50;
     text-decoration: none;
@@ -162,7 +162,7 @@ body {
 .delete {
     background-color: rgba(240, 240, 240, 255);
     border-radius: 5px;
-    padding: 7px;
+    padding: 6px;
     color: black;
     border: 2px solid #4CAF50;
     text-decoration: none;

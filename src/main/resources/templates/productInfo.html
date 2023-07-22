@@ -16,6 +16,7 @@
                 <div th:if="${user.role.name() == 'ADMIN'}">
                     <a th:href="@{'/products/create'}">Создать товар</a>
                     <a th:href="@{'/orders'}">Заказы</a>
+                    <a th:href="@{'/logout'}">Выйти</a>
                 </div>
             </th:block>
 
@@ -23,6 +24,14 @@
                 <div th:if="${user.role.name() == 'USER'}">
                     <a th:href="@{'/user'}">Личный кабинет</a>
                     <a th:href="@{'/cart'}">Корзина</a>
+                    <a th:href="@{'/logout'}">Выйти</a>
+                </div>
+            </th:block>
+
+            <th:block th:if="${user == null}">
+                <div>
+                    <a th:href="@{'/registration'}">Регистрация</a>
+                    <a th:href="@{'/login'}">Войти</a>
                 </div>
             </th:block>
         </div>
@@ -35,6 +44,10 @@
             <p th:text="'Стоимость: ' + ${product.price}"></p>
             <p th:text="'Рейтинг: ' + ${mark}"></p>
 
+            <div th:each="detail : ${productDetails}">
+                <p th:text="${detail.specification.name} + ': ' + ${detail.description.name}"></p>
+            </div>
+
             <th:block th:if="${user != null}">
                 <div th:if="${user.role.name() == 'USER'}" class="addToCart">
                     <a th:href="@{'/products/' + ${product.id} + '/addToCart'}">Добавить в корзину</a>
@@ -44,31 +57,53 @@
         </div>
 
         <div class="reviews">
-
-            <form th:if="${user.role.name() == 'USER'} and ${reviewCheck == false}"
-                  th:action="@{'/products/' + ${product.Id} + '/edit/review/add' }" method="post">
-                <textarea placeholder="Отзыв" name="productReview"></textarea>
-                <input type="number" name="productMark" placeholder="Рейтинг">
-                <button type="submit" class="reviewsSubmit">Оставить отзыв</button>
-            </form>
-
-            <div th:if="${user.role.name() == 'USER'} and ${reviewCheck == true}">
-                <p>Отзыв уже оставлен!</p>
-            </div>
-
-            <th:block th:if="${user.role.name() == 'ADMIN'}" th:each="review : ${reviews}">
-                <form th:action="@{'/products/' + ${product.id} + '/edit/review/'+ ${review.id} +'/confirm'}"
-                      method="post">
-                    <p th:text="${review.text}" class="reviews-text"></p>
-                    <select required="required" name="released">
-                        <option th:value="true" th:selected="${review.released == true}">true</option>
-                        <option th:value="false" th:selected="${review.released == false}">false</option>
-                    </select>
-                    <button type="submit">Подтвердить</button>
-                </form>
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'USER'} and ${#lists.isEmpty(checkedReviews)}" class="noReviews">
+                    <h3>Ещё нет отзывов, будь первым!</h3>
+                </div>
             </th:block>
 
-            <th:block th:if="${user.role.name() == 'USER'}" th:each="checkedReview : ${checkedReviews}">
+            <th:block th:if="${user == null}">
+                <div th:if="${#lists.isEmpty(checkedReviews)}" class="noReviews">
+                    <h3>Ещё нет отзывов, будь первым!</h3>
+                    <a href="/login">Войти, чтобы оставить отзыв</a>
+                </div>
+            </th:block>
+
+            <th:block th:if="${user != null}">
+                <form th:if="${user.role.name() == 'USER'} and ${reviewCheck == false}"
+                      th:action="@{'/products/' + ${product.Id} + '/edit/review/add' }" method="post">
+                    <textarea placeholder="Отзыв" name="productReview"></textarea>
+                    <input type="number" name="productMark" placeholder="Рейтинг">
+                    <button type="submit" class="reviewsSubmit">Оставить отзыв</button>
+                </form>
+
+                <div th:if="${user.role.name() == 'USER'} and ${reviewCheck == true}">
+                    <h3>Отзыв уже оставлен!</h3>
+                </div>
+            </th:block>
+
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'ADMIN'} and ${#lists.isEmpty(reviews)}" class="noReviews">
+                    <h3>Отзывов ещё нет</h3>
+                </div>
+            </th:block>
+
+            <th:block th:if="${user != null}">
+                <th:block th:if="${user.role.name() == 'ADMIN'}" th:each="review : ${reviews}">
+                    <form th:action="@{'/products/' + ${product.id} + '/edit/review/'+ ${review.id} +'/confirm'}"
+                          method="post">
+                        <p th:text="${review.text}" class="reviews-text"></p>
+                        <select required="required" name="released">
+                            <option th:value="true" th:selected="${review.released == true}">true</option>
+                            <option th:value="false" th:selected="${review.released == false}">false</option>
+                        </select>
+                        <button type="submit">Подтвердить</button>
+                    </form>
+                </th:block>
+            </th:block>
+
+            <th:block th:if="${user.role.name() != 'ADMIN'}" th:each="checkedReview : ${checkedReviews}">
                 <p th:text="${checkedReview.text}" class="reviews-text"></p>
             </th:block>
 

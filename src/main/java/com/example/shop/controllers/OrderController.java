@@ -24,6 +24,7 @@ public class OrderController {
     @GetMapping(path = "/orders")
     public String orders(Model model) {
         model.addAttribute("orders", orderService.findAllOrders());
+        model.addAttribute("user", orderService.getUser());
         return "orders";
     }
 

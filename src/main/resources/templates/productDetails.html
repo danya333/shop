@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/style/productDetails.css" th:href="@{/css/productDetails.css}"/>
+    <title>Характеристики товара</title>
 </head>
 <body>
-$END$
+
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a th:href="@{'/'}">ALIEXPRESS</a>
+        </div>
+        <div class="header-links">
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'ADMIN'}">
+                    <a th:href="@{'/products/create'}">Создать товар</a>
+                    <a th:href="@{'/orders'}">Заказы</a>
+                    <a th:href="@{'/logout'}">Выйти</a>
+                </div>
+            </th:block>
+
+            <th:block th:if="${user != null}">
+                <div th:if="${user.role.name() == 'USER'}">
+                    <a th:href="@{'/user'}">Личный кабинет</a>
+                    <a th:href="@{'/cart'}">Корзина</a>
+                    <a th:href="@{'/logout'}">Выйти</a>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+    <div class="data">
+
+        <form th:action="@{'/productDetails/' + ${categoryId} + '/'+ ${product.id}}" method="post" class="createForm">
+            <p>Характеристики</p>
+            <div th:each="specif : ${specifications}" class="inputs">
+                <input type="text" th:name="value" th:placeholder="${specif.name}">
+            </div>
+            <button type="submit">Сохранить</button>
+
+        </form>
+    </div>
+
+
+</div>
+
 </body>
 </html>
