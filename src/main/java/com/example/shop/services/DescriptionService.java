@@ -3,10 +3,12 @@ package com.example.shop.services;
 import com.example.shop.Repositories.DescriptionRepository;
 import com.example.shop.models.Description;
 import com.example.shop.models.Product;
+import com.example.shop.models.ProductDetail;
 import com.example.shop.models.Specification;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -61,5 +63,26 @@ public class DescriptionService {
         }
     }
 
+    // ProductDetails
+    public List<ProductDetail> getProductDetails(Product product) {
+        List<ProductDetail> productDetails = new ArrayList<>();
+        List<Specification> specifications = product.getCategory().getSpecifications();
+        for (int i = 0; i < specifications.size(); i++) {
+            ProductDetail detail = new ProductDetail();
+            detail.setSpecification(specifications.get(i));
+//            if(product.getDescriptions().size() == 0 || product.getDescriptions().size() - 1 < i){
+//                detail.setDescription(new Description());
+//            } else {
+//                detail.setDescription(product.getDescriptions().get(i));
+//            }
+            if (findDescriptionByProductAndSpecification(product, specifications.get(i)) == null){
+                detail.setDescription(new Description());
+            } else {
+                detail.setDescription(findDescriptionByProductAndSpecification(product, specifications.get(i)));
+            }
+            productDetails.add(detail);
+        }
+        return productDetails;
+    }
 
 }

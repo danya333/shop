@@ -61,10 +61,10 @@ public class ProductController {
         Product product = productService.findProductById(productId);
         model.addAttribute("product", product);
         model.addAttribute("user", userService.getCurrentUser());
-        model.addAttribute("productDetails", productService.getProductDetails(product));
-        model.addAttribute("descriptions", product.getDescriptions());
-        model.addAttribute("specifications", specificationService
-                .findSpecificationsByCategoryId(product.getCategory().getId()));
+        model.addAttribute("productDetails", descriptionService.getProductDetails(product));
+//        model.addAttribute("descriptions", product.getDescriptions());
+//        model.addAttribute("specifications", specificationService
+//                .findSpecificationsByCategoryId(product.getCategory().getId()));
         return "editProduct";
     }
 
@@ -97,7 +97,7 @@ public class ProductController {
         model.addAttribute("reviews", reviews);
         model.addAttribute("mark", mark);
         model.addAttribute("reviewCheck", reviewService.reviewCheck(product, user));
-        model.addAttribute("productDetails", productService.getProductDetails(product));
+        model.addAttribute("productDetails", descriptionService.getProductDetails(product));
         return "productInfo";
     }
 
