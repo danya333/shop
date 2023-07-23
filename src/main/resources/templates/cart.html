@@ -7,7 +7,6 @@
 </head>
 <body>
 
-
 <div class="container">
     <div class="header">
         <div class="logo">
@@ -24,32 +23,37 @@
         </div>
     </div>
 
-    <div class="data">
-        <div class="products">
-            <h2>Корзина</h2>
-            <div th:each="cart : ${carts}" class="product">
-                <p th:text="${cart.product.name}" class="product-name"></p>
-                <p th:text="'Стоимость: ' + ${cart.number} + 'x' + ${cart.product.price} + ' = ' + ${cart.price}"></p>
-                <div class="buttons">
-                    <a th:href="@{'/cart/' + ${cart.product.id} + '/add'}" class="changePlus">+</a>
-                    <a th:href="@{'/cart/' + ${cart.product.id} + '/remove'}" class="changeMinus">-</a>
-                    <a th:href="@{'/cart/' + ${cart.product.id} + '/delete'}" class="delete">Удалить</a>
+    <th:block th:if="${#lists.isEmpty(carts)}">
+        <h3 class="noProductsH3">Корзина пуста</h3>
+    </th:block>
+
+    <th:block th:unless="${#lists.isEmpty(carts)}">
+        <div class="data">
+            <div class="products">
+
+                <div th:each="cart : ${carts}" class="product">
+                    <p th:text="${cart.product.name}" class="product-name"></p>
+                    <p th:text="'Стоимость: ' + ${cart.number} + 'x' + ${cart.product.price} + ' = ' + ${cart.price}"></p>
+                    <div class="buttons">
+                        <a th:href="@{'/cart/' + ${cart.product.id} + '/add'}" class="changePlus">+</a>
+                        <a th:href="@{'/cart/' + ${cart.product.id} + '/remove'}" class="changeMinus">-</a>
+                        <a th:href="@{'/cart/' + ${cart.product.id} + '/delete'}" class="delete">Удалить</a>
+                    </div>
                 </div>
             </div>
+
+            <div class="cart-process">
+                <h3 th:text="'Итоговая стоимость: ' + ${total}"></h3>
+                <form action="/cart/process" method="post" class="address">
+                    <input type="text"
+                           placeholder="Адрес доставки"
+                           name="address"/>
+                    <button type="submit">Оформить заказ</button>
+                </form>
+            </div>
+
         </div>
-
-        <div class="cart-process">
-            <p th:text="'Итоговая стоимость: ' + ${total}"></p>
-            <form action="/cart/process" method="post" class="address">
-                <input type="text"
-                       placeholder="Адрес доставки"
-                       name="address"/>
-                <button type="submit">Оформить заказ</button>
-            </form>
-        </div>
-
-    </div>
-
+    </th:block>
 
 </div>
 

@@ -94,8 +94,6 @@ body {
 
 .cart-process p {
     text-align: center;
-    font-weight: bold;
-    font-size: 18px;
 }
 
 .cart-process input {
@@ -179,4 +177,8 @@ body {
     flex-direction: column;
     align-items: center;
     width: 50%;
+}
+
+.noProductsH3 {
+    margin-top: 20px;
 }

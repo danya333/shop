@@ -22,6 +22,7 @@ public class ReviewController {
         return "redirect:/products/" + productId;
     }
 
+    // Форма подтверждения отзыва со стороны admin
     @PostMapping(path = "/products/{productId}/edit/review/{reviewId}/confirm")
     public String confirmReview(
             @PathVariable(name = "productId") Long productId,
