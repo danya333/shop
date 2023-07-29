@@ -34,6 +34,7 @@
     <div class="data">
 
         <form th:action="@{'/productDetails/' + ${categoryId} + '/'+ ${product.id}}" method="post" class="createForm">
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <p>Характеристики</p>
             <div th:each="specif : ${specifications}" class="inputs">
                 <input type="text" th:name="value" th:placeholder="${specif.name}">

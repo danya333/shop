@@ -20,7 +20,6 @@ public class ProductController {
     private final ReviewService reviewService;
     private final UserService userService;
     private final DescriptionService descriptionService;
-    private final SpecificationService specificationService;
 
 
     @GetMapping(path = "/")
@@ -62,9 +61,6 @@ public class ProductController {
         model.addAttribute("product", product);
         model.addAttribute("user", userService.getCurrentUser());
         model.addAttribute("productDetails", descriptionService.getProductDetails(product));
-//        model.addAttribute("descriptions", product.getDescriptions());
-//        model.addAttribute("specifications", specificationService
-//                .findSpecificationsByCategoryId(product.getCategory().getId()));
         return "editProduct";
     }
 

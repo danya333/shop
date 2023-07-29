@@ -10,7 +10,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable();
+//        httpSecurity.csrf().disable();
         httpSecurity.authorizeHttpRequests(authorization -> {
             authorization
                     .requestMatchers("/products")
@@ -24,6 +24,21 @@ public class SecurityConfig {
             authorization
                     .requestMatchers("/orders")
                     .hasRole("admin");
+            authorization
+                    .requestMatchers("/orders/{orderId}/change")
+                    .hasRole("admin");
+            authorization
+                    .requestMatchers("/orders/{id}")
+                    .hasRole("admin");
+            authorization
+                    .requestMatchers("/products/{id}/delete")
+                    .hasRole("admin");
+            authorization
+                    .requestMatchers("/products/{productId}/edit/review/{reviewId}/confirm")
+                    .hasRole("admin");
+            authorization
+                    .requestMatchers("/products/{id}/edit/review/add")
+                    .hasRole("user");
             authorization
                     .anyRequest()
                     .permitAll();

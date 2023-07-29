@@ -45,6 +45,7 @@
             <div class="cart-process">
                 <h3 th:text="'Итоговая стоимость: ' + ${total}"></h3>
                 <form action="/cart/process" method="post" class="address">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                     <input type="text"
                            placeholder="Адрес доставки"
                            name="address"/>

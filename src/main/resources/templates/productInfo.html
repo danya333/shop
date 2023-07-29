@@ -73,6 +73,7 @@
             <th:block th:if="${user != null}">
                 <form th:if="${user.role.name() == 'USER'} and ${reviewCheck == false}"
                       th:action="@{'/products/' + ${product.Id} + '/edit/review/add' }" method="post">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                     <textarea placeholder="Отзыв" name="productReview"></textarea>
                     <input type="number" name="productMark" placeholder="Рейтинг">
                     <button type="submit" class="reviewsSubmit">Оставить отзыв</button>
@@ -93,6 +94,7 @@
                 <th:block th:if="${user.role.name() == 'ADMIN'}" th:each="review : ${reviews}">
                     <form th:action="@{'/products/' + ${product.id} + '/edit/review/'+ ${review.id} +'/confirm'}"
                           method="post">
+                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                         <p th:text="${review.text}" class="reviews-text"></p>
                         <select required="required" name="released">
                             <option th:value="true" th:selected="${review.released == true}">true</option>

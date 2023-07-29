@@ -24,6 +24,7 @@
 
     <div class="data">
         <form th:action="@{'/products/' + ${product.Id} + '/edit' }" method="post" class="createForm">
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <p>Редактирование</p>
             <div class="first-inputs">
                 <div>

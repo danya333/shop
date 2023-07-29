@@ -24,6 +24,7 @@
 
     <div class="data">
         <form action="/user/create" method="post" class="createForm">
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <p>Регистрация</p>
             <input type="text" placeholder="Имя" name="userName">
             <input type="text" placeholder="Фамилия" name="userSurname">

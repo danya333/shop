@@ -25,6 +25,7 @@
 
     <div class="data">
         <form action="/products/create" method="post" class="createForm">
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <p>Создание товара</p>
             <input type="text"
                    placeholder="Название товара"
